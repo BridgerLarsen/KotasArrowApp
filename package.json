@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "App for breeding dogs",
   "main": "server.js",
-  "engines": "14.15.5",
+  "engines": {
+    "node": "14.15.5"
+  },
   "scripts": {
     "start": "nodemon server.js",
     "client": "npm start --prefix client",
