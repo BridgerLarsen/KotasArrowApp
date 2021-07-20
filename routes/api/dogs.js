@@ -123,7 +123,6 @@ router.post('/add', auth, cbUpload, (req, res, next) => {
 // @route UPDATE api/dogs
 // @desc Update dog profile
 // @access private
-// const cbUpload = upload.fields([{ name: 'imgProfileUrl', maxCount: 1 }, { name: 'images', maxCount: 16 }])
 
 router.patch('/update/:id', auth, cbUpload, (req, res) => {
     const imagesCb = () => {

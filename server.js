@@ -27,13 +27,13 @@ app.use(express.json({ limit: '16mb', extended: true }));
 
 app.use(cors({ origin: process.env.ORIGIN || 'http://localhost:3000', credentials: true }));
 
-app.use(cookieParser(process.env.cookieSecret));
+app.use(cookieParser(process.env.COOKIESECRET));
 
 app.use('/uploads', express.static('uploads'));
 
 
 mongoose
-    .connect(process.env.mongoURI, { 
+    .connect(process.env.MONGOURI, { 
             useNewUrlParser: true, 
             useUnifiedTopology: true,
             useCreateIndex: true 
