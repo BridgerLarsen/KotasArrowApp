@@ -78,7 +78,7 @@ router.post('/add', auth, cbUpload, (req, res, next) => {
         return imagesArr;
     }
     
-    let imgProfileUrl = req.files.imgProfileUrl ? `${process.env.ORIGIN || 'http://localhost:5000'}/${req.files.imgProfileUrl[0].path}` : "";
+    let imgProfileUrl = req.files.imgProfileUrl ? `${req.protocol}://${req.headers.host || 'http://localhost:5000'}/${req.files.imgProfileUrl[0].path}` : "";
     let images = req.files.images ? imagesCb() : []; 
 
     const {
