@@ -72,7 +72,7 @@ router.post('/add', auth, cbUpload, (req, res, next) => {
         var imagesArr = [];
 
         req.files.images.map(img => {
-            imagesArr.push({ src: `${process.env.ORIGIN || 'http://localhost:5000'}/${img.path}` });
+            imagesArr.push({ src: `${req.protocol}://${req.headers.host || 'http://localhost:5000'}/${img.path}` });
         })
 
         return imagesArr;
@@ -136,14 +136,14 @@ router.patch('/update/:id', auth, cbUpload, (req, res) => {
 
         if (req.files.images) {
             req.files.images.map(img => {
-                imagesArr.push({ src: `${process.env.ORIGIN || 'http://localhost:5000'}/${img.path}` });
+                imagesArr.push({ src: `${req.protocol}://${req.headers.host || 'http://localhost:5000'}/${img.path}` });
             })
         }
 
         return imagesArr;
     }
 
-    let imgProfileUrl = req.files.imgProfileUrl ? `${process.env.ORIGIN || 'http://localhost:5000'}/${req.files.imgProfileUrl[0].path}` : req.body.imgProfileUrl;
+    let imgProfileUrl = req.files.imgProfileUrl ? `${req.protocol}://${req.headers.host || 'http://localhost:5000'}/${req.files.imgProfileUrl[0].path}` : req.body.imgProfileUrl;
     let images = imagesCb(); 
         
     const {
@@ -194,7 +194,7 @@ router.delete('/delete/:id', auth, (req, res) => {
         .then(dog => {
             if (dog.imgProfileUrl) {
                 var imgProfileUrlPath = dog.imgProfileUrl.replace(
-                    `${process.env.ORIGIN || 'http://localhost:5000'}`, 
+                    `${req.protocol}://${req.headers.host || 'http://localhost:5000'}`, 
                     path.dirname(fs.realpathSync('uploads/'))
                 )
                 if (fs.existsSync(imgProfileUrlPath)) {
@@ -205,7 +205,7 @@ router.delete('/delete/:id', auth, (req, res) => {
             if (dog.images) {
                 dog.images.map(img => {
                     var imgPath = img.src.replace(
-                            `${process.env.ORIGIN || 'http://localhost:5000'}`, 
+                        `${req.protocol}://${req.headers.host || 'http://localhost:5000'}`, 
                             path.dirname(fs.realpathSync('uploads/'))
                         )
                     if (fs.existsSync(imgPath)) {
@@ -230,7 +230,7 @@ router.delete('/deleteAnImage/:id', auth, (req, res) => {
         .then(dog => {
             if (dog.imgProfileUrl === req.query.imgProfileUrl) {
                 var imgProfileUrlPath = dog.imgProfileUrl.replace(
-                    `${process.env.ORIGIN || 'http://localhost:5000'}`, 
+                    `${req.protocol}://${req.headers.host || 'http://localhost:5000'}`, 
                     path.dirname(fs.realpathSync('uploads/'))
                 )
                 fs.unlinkSync(imgProfileUrlPath);
@@ -242,7 +242,7 @@ router.delete('/deleteAnImage/:id', auth, (req, res) => {
                 dog.images.map(img => {
                     if (img.src === req.query.image) {
                         var imgPath = img.src.replace(
-                            `${process.env.ORIGIN || 'http://localhost:5000'}`, 
+                            `${req.protocol}://${req.headers.host || 'http://localhost:5000'}`, 
                             path.dirname(fs.realpathSync('uploads/'))
                         )
                         fs.unlinkSync(imgPath);
