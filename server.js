@@ -54,11 +54,7 @@ app.use('/api/users', users)
 app.use('/api/auth', auth);
 
 if (process.env.NODE_ENV === 'production') {
-    app.use('/static', express.static(path.join(__dirname, 'client/build')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    })
+    app.use(express.static(__dirname + '/client/build'))
 }
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
